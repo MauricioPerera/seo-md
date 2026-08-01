@@ -35,11 +35,14 @@ detrás de cada regla.
 ## Estructura de este repo
 
 ```
-SEO.md                     el protocolo — leé esto primero
-lint/seo-lint.js            linter de referencia, genérico (no asume ningún framework)
-lint/seo-export-schema.js   genera el JSON-LD desde schema: — templating puro, sin LLM
-example/                    instancia mínima de SEO.md + páginas de ejemplo, sin dependencias
-docs/                       sitio de GitHub Pages (ES/EN/PT) — instancia real, una por idioma
+SEO.md                       el protocolo web — leé esto primero
+PRODUCTHUNT.md                protocolo hermano para lanzamientos de Product Hunt
+lint/seo-lint.js              linter de SEO.md, genérico (no asume ningún framework)
+lint/seo-export-schema.js     genera el JSON-LD desde schema: — templating puro, sin LLM
+lint/producthunt-lint.js      linter de PRODUCTHUNT.md (tagline/description/galería)
+example/                      instancia mínima de SEO.md + páginas de ejemplo, sin dependencias
+example/producthunt/          instancia mínima de PRODUCTHUNT.md
+docs/                         sitio de GitHub Pages (ES/EN/PT) — instancia real, una por idioma
 ```
 
 ## Probarlo
@@ -92,6 +95,18 @@ node lint/seo-export-schema.js tu-SEO.md --json-only   # el objeto, sin el <scri
 Es templating puro sobre el YAML — no interpreta nada, así que un campo
 ausente en `schema:` simplemente no aparece en la salida (o el comando falla
 con un mensaje claro si falta `name`/`description`, que son obligatorios).
+
+## Protocolos hermanos
+
+El patrón (techo duro verificable + prosa, nunca piso duro por presencia) no es específico
+de páginas web. [`PRODUCTHUNT.md`](./PRODUCTHUNT.md) lo aplica a un lanzamiento de Product
+Hunt — tagline, descripción, galería — con su propio schema y linter
+(`lint/producthunt-lint.js`), porque un post no tiene `<title>`/`<meta>` que el linter de
+SEO.md pueda validar. Ver la sección "Por qué no es una instancia de SEO.md" en ese archivo.
+
+```bash
+npm run producthunt:lint
+```
 
 ## Un caso real
 
