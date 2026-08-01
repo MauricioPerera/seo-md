@@ -18,6 +18,8 @@ keywords:
   max_density: { count: 3, per_words: 500 }
 schema:
   default_type: "SoftwareApplication"
+  name: "Notas Rápidas"
+  description: "App de notas simple para organizar ideas rápido."
   applicationCategory: "ProductivityApplication"
 linking:
   max_internal_links_per_page: 5

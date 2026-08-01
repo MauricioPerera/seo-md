@@ -35,10 +35,11 @@ detrás de cada regla.
 ## Estructura de este repo
 
 ```
-SEO.md              el protocolo — leé esto primero
-lint/seo-lint.js     linter de referencia, genérico (no asume ningún framework)
-example/             instancia mínima de SEO.md + páginas de ejemplo, sin dependencias
-docs/                sitio de GitHub Pages (ES/EN/PT) — instancia real, una por idioma
+SEO.md                     el protocolo — leé esto primero
+lint/seo-lint.js            linter de referencia, genérico (no asume ningún framework)
+lint/seo-export-schema.js   genera el JSON-LD desde schema: — templating puro, sin LLM
+example/                    instancia mínima de SEO.md + páginas de ejemplo, sin dependencias
+docs/                       sitio de GitHub Pages (ES/EN/PT) — instancia real, una por idioma
 ```
 
 ## Probarlo
@@ -74,6 +75,23 @@ El linter valida, contra tu `SEO.md`:
 - que cada página no-pilar linkee al menos a una `pillar_page`
 - que no haya `<title>` duplicado entre páginas
 - que el JSON-LD (si está presente) sea válido
+
+## Generar el JSON-LD desde el SEO.md
+
+`schema:` en el frontmatter necesita `default_type`, `name` y `description`
+(`applicationCategory`/`operating_system` son opcionales) para poder generar
+el bloque completo:
+
+```bash
+node lint/seo-export-schema.js tu-SEO.md --url https://tu-sitio.com/pagina
+# <script type="application/ld+json">{"@context":"https://schema.org",...}</script>
+
+node lint/seo-export-schema.js tu-SEO.md --json-only   # el objeto, sin el <script>
+```
+
+Es templating puro sobre el YAML — no interpreta nada, así que un campo
+ausente en `schema:` simplemente no aparece en la salida (o el comando falla
+con un mensaje claro si falta `name`/`description`, que son obligatorios).
 
 ## Un caso real
 

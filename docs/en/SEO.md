@@ -18,7 +18,10 @@ keywords:
   max_density: { count: 3, per_words: 500 }
 schema:
   default_type: "SoftwareApplication"
+  name: "SEO.md"
+  description: "Open two-layer protocol for verifiable AI-generated SEO content."
   applicationCategory: "DeveloperApplication"
+  operating_system: "Any"
 linking: {}
 ---
 

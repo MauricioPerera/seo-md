@@ -67,9 +67,12 @@ técnicamente miden 60 caracteres pero leen mal.
 
 6. **Herramientas CLI que operan sobre el `SEO.md` de un proyecto, no reimplementadas por
    sitio.** Un `lint` que valida contenido ya escrito contra los techos duros + reporta los
-   scores blandos, y un `export schema` que genera el JSON-LD del `<head>` a partir del
-   YAML — este último sin LLM de por medio, es templating puro sobre config y por eso no
-   tiene ambigüedad posible.
+   scores blandos, y un `export-schema` que genera el JSON-LD del `<head>` a partir de
+   `schema:` — este último sin LLM de por medio, es templating puro sobre config y por eso
+   no tiene ambigüedad posible. Requiere que `schema:` tenga `default_type`, `name` y
+   `description` además de `applicationCategory` — sin esos dos últimos no hay JSON-LD
+   válido que generar (implementación de referencia: `lint/seo-export-schema.js`, en
+   este mismo repo).
 
 ### Ejemplo de frontmatter
 
@@ -94,6 +97,9 @@ keywords:
   max_density: { count: 3, per_words: 500 }           # techo, no piso (regla 2)
 schema:
   default_type: "SoftwareApplication"
+  name: "Nombre del producto"                         # obligatorio para export-schema
+  description: "Qué es, en una frase."                # obligatorio para export-schema
+  applicationCategory: "BusinessApplication"           # opcional
 linking:
   max_internal_links_per_page: 5
   pillar_pages: ["/pagina-pilar-uno", "/pagina-pilar-dos"]

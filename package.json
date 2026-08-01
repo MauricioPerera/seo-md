@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "lint": "node lint/seo-lint.js example/SEO.md example/pages.js",
-    "docs:lint": "node lint/seo-lint.js docs/SEO.md docs/pages.js && node lint/seo-lint.js docs/en/SEO.md docs/en/pages.js && node lint/seo-lint.js docs/pt/SEO.md docs/pt/pages.js"
+    "docs:lint": "node lint/seo-lint.js docs/SEO.md docs/pages.js && node lint/seo-lint.js docs/en/SEO.md docs/en/pages.js && node lint/seo-lint.js docs/pt/SEO.md docs/pt/pages.js",
+    "export-schema": "node lint/seo-export-schema.js example/SEO.md"
   },
   "dependencies": {
     "yaml": "^2.9.0"
