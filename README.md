@@ -1,5 +1,7 @@
 # SEO.md
 
+[![SEO lint](https://github.com/MauricioPerera/seo-md/actions/workflows/lint.yml/badge.svg)](https://github.com/MauricioPerera/seo-md/actions/workflows/lint.yml)
+
 Protocolo de dos capas para generar contenido web con restricciones SEO
 verificables usando agentes de IA — sin caer en keyword stuffing ni en
 prosa forzada para esquivar un checker.
