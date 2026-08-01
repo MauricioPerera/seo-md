@@ -2,6 +2,10 @@
 
 [![SEO lint](https://github.com/MauricioPerera/seo-md/actions/workflows/lint.yml/badge.svg)](https://github.com/MauricioPerera/seo-md/actions/workflows/lint.yml)
 
+**Explicación para no técnicos, en 3 idiomas:** [ES](https://mauricioperera.github.io/seo-md/) ·
+[EN](https://mauricioperera.github.io/seo-md/en/) ·
+[PT](https://mauricioperera.github.io/seo-md/pt/)
+
 Protocolo de dos capas para generar contenido web con restricciones SEO
 verificables usando agentes de IA — sin caer en keyword stuffing ni en
 prosa forzada para esquivar un checker.
@@ -34,6 +38,7 @@ detrás de cada regla.
 SEO.md              el protocolo — leé esto primero
 lint/seo-lint.js     linter de referencia, genérico (no asume ningún framework)
 example/             instancia mínima de SEO.md + páginas de ejemplo, sin dependencias
+docs/                sitio de GitHub Pages (ES/EN/PT) — instancia real, una por idioma
 ```
 
 ## Probarlo

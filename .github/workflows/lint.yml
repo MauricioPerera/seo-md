@@ -1,4 +1,4 @@
-name: SEO lint (example)
+name: SEO lint
 
 on:
   push:
@@ -15,3 +15,4 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run lint
+      - run: npm run docs:lint

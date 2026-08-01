@@ -5,7 +5,8 @@
   "description": "Protocolo de dos capas (frontmatter verificable + prosa semántica) para generar contenido SEO con agentes de IA, más un linter de referencia.",
   "type": "module",
   "scripts": {
-    "lint": "node lint/seo-lint.js example/SEO.md example/pages.js"
+    "lint": "node lint/seo-lint.js example/SEO.md example/pages.js",
+    "docs:lint": "node lint/seo-lint.js docs/SEO.md docs/pages.js && node lint/seo-lint.js docs/en/SEO.md docs/en/pages.js && node lint/seo-lint.js docs/pt/SEO.md docs/pt/pages.js"
   },
   "dependencies": {
     "yaml": "^2.9.0"
