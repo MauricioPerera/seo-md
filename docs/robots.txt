@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mauricioperera.github.io/seo-md/sitemap.xml
