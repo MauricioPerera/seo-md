@@ -1,0 +1,13 @@
+{
+  "name": "seo-md",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Protocolo de dos capas (frontmatter verificable + prosa semántica) para generar contenido SEO con agentes de IA, más un linter de referencia.",
+  "type": "module",
+  "scripts": {
+    "lint": "node lint/seo-lint.js example/SEO.md example/pages.js"
+  },
+  "dependencies": {
+    "yaml": "^2.9.0"
+  }
+}
