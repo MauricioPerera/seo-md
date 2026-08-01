@@ -70,7 +70,12 @@ export const PAGINAS = [
 El linter valida, contra tu `SEO.md`:
 
 - `<title>` y `<meta name="description">` dentro de sus presupuestos de caracteres
-  (incluyendo `separator`/`suffix` si tu título los usa)
+  (incluyendo `separator`/`suffix` si tu título los usa), y por encima de su
+  `min_chars` si lo declarás — piso NUMÉRICO, gate duro, distinto de un piso
+  semántico de keyword (regla 7)
+- `forbidden_structure` (ej. `["table"]`) — gate duro siempre, sin excepción de
+  body; este linter solo verifica `"table"` porque el resto de los tipos
+  (`raw_html`, `literal_markdown`) no aplican a un medio que ya es HTML (regla 8)
 - keywords primarias por debajo del techo de densidad, nunca exigidas por presencia
 - términos prohibidos bloqueados en `meta.title`/`meta.description`, informados
   (no bloqueados) en el cuerpo — evita falsos positivos en frases comparativas

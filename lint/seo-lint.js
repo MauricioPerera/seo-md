@@ -82,6 +82,30 @@ function contieneTerminoConLimite(texto, termino) {
   return new RegExp(`\\b${escaped}\\b`, "i").test(texto);
 }
 
+// forbidden_structure (SEO.md regla 8): a diferencia de negative.terms, esto
+// prohíbe un tipo de MARCADO, no una palabra — y siempre es gate duro, nunca
+// señal blanda (no hay uso "comparativo" legítimo de una <table>). Este
+// extractor es HTML, así que solo "table" tiene sentido: "raw_html" y
+// "literal_markdown" son contradictorios en un medio que YA es HTML — se
+// informan como no aplicables en vez de fallar silenciosamente sin chequear
+// nada (mismo motivo que el resto del proyecto evita checks que nunca fallan).
+const TIPOS_FORBIDDEN_STRUCTURE_SOPORTADOS = ["table"];
+
+function chequearEstructuraProhibida(html, tiposConfigurados) {
+  const duros = [];
+  const blandos = [];
+  for (const tipo of tiposConfigurados) {
+    if (!TIPOS_FORBIDDEN_STRUCTURE_SOPORTADOS.includes(tipo)) {
+      blandos.push(`forbidden_structure: "${tipo}" no aplica a HTML (el medio ya es HTML) — no verificado por este linter.`);
+      continue;
+    }
+    if (tipo === "table" && /<table[\s>]/i.test(html)) {
+      duros.push('Elemento <table> encontrado — prohibido por forbidden_structure.');
+    }
+  }
+  return { duros, blandos };
+}
+
 function lintearPagina(pagina, cfg) {
   const { html, ruta } = pagina;
   const title = extraerTitle(html);
@@ -108,15 +132,29 @@ function lintearPagina(pagina, cfg) {
 
   if (title === null) {
     duros.push("No se encontró <title>.");
-  } else if (title.length > cfg.meta.title.max_chars) {
-    duros.push(`<title> mide ${title.length} chars, máximo ${cfg.meta.title.max_chars}. ("${title}")`);
+  } else {
+    if (title.length > cfg.meta.title.max_chars) {
+      duros.push(`<title> mide ${title.length} chars, máximo ${cfg.meta.title.max_chars}. ("${title}")`);
+    }
+    if (typeof cfg.meta.title.min_chars === "number" && title.length < cfg.meta.title.min_chars) {
+      duros.push(`<title> mide ${title.length} chars, mínimo ${cfg.meta.title.min_chars}. ("${title}")`);
+    }
   }
 
   if (description === null) {
     duros.push('No se encontró <meta name="description">.');
-  } else if (description.length > cfg.meta.description.max_chars) {
-    duros.push(`meta description mide ${description.length} chars, máximo ${cfg.meta.description.max_chars}.`);
+  } else {
+    if (description.length > cfg.meta.description.max_chars) {
+      duros.push(`meta description mide ${description.length} chars, máximo ${cfg.meta.description.max_chars}.`);
+    }
+    if (typeof cfg.meta.description.min_chars === "number" && description.length < cfg.meta.description.min_chars) {
+      duros.push(`meta description mide ${description.length} chars, mínimo ${cfg.meta.description.min_chars}.`);
+    }
   }
+
+  const estructura = chequearEstructuraProhibida(html, cfg.forbidden_structure ?? []);
+  duros.push(...estructura.duros);
+  blandos.push(...estructura.blandos);
 
   const negativeScope = cfg.keywords?.negative?.hard_scope ?? [];
   const negativeTerms = cfg.keywords?.negative?.terms ?? [];

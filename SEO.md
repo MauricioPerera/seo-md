@@ -74,6 +74,30 @@ técnicamente miden 60 caracteres pero leen mal.
    válido que generar (implementación de referencia: `lint/seo-export-schema.js`, en
    este mismo repo).
 
+7. **Un piso NUMÉRICO de longitud (`min_chars`/`min_words`) no es lo mismo que un piso
+   SEMÁNTICO de presencia (regla 2, "debe mencionar esta keyword"), y se trata distinto.**
+   Un piso semántico forzado como gate duro produce keyword stuffing porque el modelo
+   inserta la frase literal para pasar el check. Un piso numérico de longitud
+   (`meta.description.min_chars: 120`, o el largo mínimo de un párrafo estructural) SÍ es
+   seguro como gate duro — es objetivamente verificable sin ambigüedad de interpretación,
+   igual que un `max_chars`, solo que invertido. Sigue existiendo un riesgo real de relleno
+   para alcanzar el mínimo (análogo, aunque más leve, al de la regla 2) — por eso este piso
+   se reserva para restricciones estructurales genuinas (un párrafo de contexto tiene que
+   ser un párrafo, no una oración suelta), nunca para forzar densidad de keywords, que
+   sigue prohibido como gate duro sin importar esta regla.
+
+8. **Prohibiciones estructurales (`forbidden_structure`) son una categoría distinta de
+   `negative.terms`: prohíben un tipo de MARCADO/FORMATO, no una palabra.** "Nunca una
+   tabla", "nunca Markdown sin procesar" (`**negrita**` visible como texto literal) no
+   tienen equivalente en `negative.terms` porque no hay una palabra que buscar — hay que
+   detectar un patrón estructural. A diferencia de `negative.terms` en el body (regla 4,
+   señal blanda por riesgo de falso positivo), acá no aplica esa excepción: no existe un
+   uso "comparativo" legítimo de una tabla HTML dentro de un editor que no la renderiza —
+   siempre es gate duro. **No todos los tipos aplican a todos los medios**: una página HTML
+   no puede prohibirse a sí misma "HTML crudo" (el medio ya es HTML) — cada implementación
+   de linter declara qué tipos de `forbidden_structure` sabe verificar para su medio, e
+   informa (sin fallar) los tipos declarados en el YAML que no le aplican.
+
 ### Ejemplo de frontmatter
 
 ```yaml
@@ -88,6 +112,8 @@ meta:
     suffix: "Nombre del sitio"
   description:
     max_chars: 155
+    min_chars: 120             # opcional — piso NUMÉRICO, gate duro (regla 7, no confundir con regla 2)
+forbidden_structure: ["table"]  # opcional — gate duro siempre (regla 8); tipos que el linter del medio reconozca
 keywords:
   primary: ["keyword principal uno", "keyword principal dos"]
   secondary: ["keyword secundaria"]
