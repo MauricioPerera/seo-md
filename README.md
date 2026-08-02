@@ -37,11 +37,14 @@ detrás de cada regla.
 ```
 SEO.md                       el protocolo web — leé esto primero
 PRODUCTHUNT.md                protocolo hermano para lanzamientos de Product Hunt
+LINKEDIN.md                    protocolo hermano para copy de feed + artículo de newsletter
 lint/seo-lint.js              linter de SEO.md, genérico (no asume ningún framework)
 lint/seo-export-schema.js     genera el JSON-LD desde schema: — templating puro, sin LLM
 lint/producthunt-lint.js      linter de PRODUCTHUNT.md (tagline/description/galería)
+lint/linkedin-lint.js          linter de LINKEDIN.md (feed_copy + newsletter_article)
 example/                      instancia mínima de SEO.md + páginas de ejemplo, sin dependencias
 example/producthunt/          instancia mínima de PRODUCTHUNT.md
+example/linkedin/              instancia mínima de LINKEDIN.md
 docs/                         sitio de GitHub Pages (ES/EN/PT) — instancia real, una por idioma
 ```
 
@@ -111,6 +114,17 @@ SEO.md pueda validar. Ver la sección "Por qué no es una instancia de SEO.md" e
 
 ```bash
 npm run producthunt:lint
+```
+
+[`LINKEDIN.md`](./LINKEDIN.md) hace lo mismo para LinkedIn, pero con dos schemas separados
+en vez de uno — `feed_copy` (copy corto con hashtags) y `newsletter_article` (largo, con
+estructura fija: hook, contexto, 3-5 secciones, cierre). Los dos formatos no comparten casi
+ninguna restricción real, así que forzarlos a un schema único con campos opcionales para
+todo era peor que dos secciones explícitas. Extraído de una skill de producción real, no
+inventado — ver "Por qué son dos schemas" en el archivo.
+
+```bash
+npm run linkedin:lint
 ```
 
 ## Un caso real

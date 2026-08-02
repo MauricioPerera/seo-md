@@ -98,6 +98,17 @@ técnicamente miden 60 caracteres pero leen mal.
    de linter declara qué tipos de `forbidden_structure` sabe verificar para su medio, e
    informa (sin fallar) los tipos declarados en el YAML que no le aplican.
 
+9. **Rango óptimo (`optimal_min`/`optimal_max`) es prosa cuantificada, nunca un gate —
+   siempre señal blanda, ni siquiera con la excepción de la regla 7.** Distinto de
+   `min_chars`/`max_chars` (techos/pisos duros, regla 3 y 7): un rango óptimo describe el
+   punto dulce dentro de un límite técnico ya duro por otro campo — "el título no puede
+   superar 150 caracteres (`max_chars`, duro), pero entre 40 y 60 es lo que mejor funciona
+   (`optimal_min`/`optimal_max`, informativo)". Fuera del rango óptimo pero dentro del
+   techo duro sigue siendo una entrega válida — el linter lo reporta, nunca bloquea. Sin
+   esta categoría, la tentación es convertir el "óptimo" en un segundo techo duro más
+   estricto, lo cual reintroduce el mismo riesgo de relleno/recorte forzado que la regla 7
+   ya evita para los pisos.
+
 ### Ejemplo de frontmatter
 
 ```yaml
