@@ -9,7 +9,8 @@
     "docs:lint": "node lint/seo-lint.js docs/SEO.md docs/pages.js && node lint/seo-lint.js docs/en/SEO.md docs/en/pages.js && node lint/seo-lint.js docs/pt/SEO.md docs/pt/pages.js",
     "export-schema": "node lint/seo-export-schema.js example/SEO.md",
     "producthunt:lint": "node lint/producthunt-lint.js example/producthunt/PRODUCTHUNT.md example/producthunt/post.js",
-    "linkedin:lint": "node lint/linkedin-lint.js example/linkedin/LINKEDIN.md example/linkedin/content.js"
+    "linkedin:lint": "node lint/linkedin-lint.js example/linkedin/LINKEDIN.md example/linkedin/content.js",
+    "agent-test:lint": "node lint/linkedin-lint.js example/agent-test/LINKEDIN.md example/agent-test/content.js"
   },
   "dependencies": {
     "yaml": "^2.9.0"

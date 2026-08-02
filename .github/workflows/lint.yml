@@ -18,3 +18,4 @@ jobs:
       - run: npm run docs:lint
       - run: npm run producthunt:lint
       - run: npm run linkedin:lint
+      - run: npm run agent-test:lint

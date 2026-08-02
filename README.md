@@ -133,6 +133,25 @@ npm run linkedin:lint
 tiene una instancia completa de este protocolo sobre un proyecto real con
 Node/Express, incluyendo el mismo linter integrado a CI (GitHub Actions).
 
+## Prueba de un agente independiente
+
+[`example/agent-test/`](./example/agent-test/) no es contenido de ejemplo escrito a mano —
+lo escribió un sub-agente sin ningún contexto de conversación previa, con acceso únicamente
+a `LINKEDIN.md` y a este mismo README/`SEO.md` como material real sobre el que escribir. La
+pregunta que esto responde: ¿alcanza el documento del protocolo, solo, para que un agente
+ajeno produzca contenido que cumpla sin iterar contra el linter ni recibir ninguna
+aclaración?
+
+Resultado, verificado corriendo `lint/linkedin-lint.js` de verdad — no por autoreporte del
+agente: pasó en el primer intento. Encontró y resolvió por su cuenta una ambigüedad real del
+documento (el formato de los hashtags, con o sin `#`, no está especificado — miró el
+ejemplo de referencia existente para decidir) y estuvo a punto de escribir un em dash antes
+de frenarse por la regla 5.
+
+```bash
+npm run agent-test:lint
+```
+
 ## Licencia
 
 MIT — ver [`LICENSE`](./LICENSE).
